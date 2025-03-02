@@ -69,6 +69,13 @@
               ktlint
               kotlin-language-server
             ];
+            processes = {
+              gradlew-bootRun = {
+                exec = ''
+                  $REPO_ROOT/gradlew bootRun
+                '';
+              };
+            };
             services = {
               postgres = {
                 enable = true;
@@ -97,12 +104,6 @@
                   $REPO_ROOT/gradlew $@
                 '';
                 description = "exeute gradlew of repository root";
-              };
-              run = {
-                exec = ''
-                  $REPO_ROOT/gradlew bootRun
-                '';
-                description = "exeute `gradlew run`";
               };
               kotest = {
                 exec = ''
