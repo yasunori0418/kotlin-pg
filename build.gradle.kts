@@ -30,7 +30,7 @@ repositories {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    // implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

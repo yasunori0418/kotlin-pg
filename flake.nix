@@ -78,7 +78,7 @@
               };
               run = {
                 exec = ''
-                  $REPO_ROOT/gradlew run
+                  $REPO_ROOT/gradlew bootRun
                 '';
                 description = "exeute `gradlew run`";
               };
