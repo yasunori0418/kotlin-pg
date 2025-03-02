@@ -69,6 +69,28 @@
               ktlint
               kotlin-language-server
             ];
+            services = {
+              postgres = {
+                enable = true;
+                package = pkgs.postgresql_17_jit;
+                initialDatabases = [
+                  {
+                    name = "app";
+                    user = "admin";
+                    pass = "admin";
+                  }
+                ];
+                port = 5432;
+                listen_addresses = "127.0.0.1";
+                settings = {
+                  log_connections = true;
+                  log_statement = "all";
+                  logging_collector = true;
+                  log_disconnections = true;
+                  log_destination = pkgs.lib.mkForce "syslog";
+                };
+              };
+            };
             scripts = {
               gw = {
                 exec = ''
