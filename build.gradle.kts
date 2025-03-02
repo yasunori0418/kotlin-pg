@@ -37,7 +37,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.session:spring-session-data-redis")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
