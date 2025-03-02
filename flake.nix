@@ -33,7 +33,19 @@
         {
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
-            overlays = [];
+            overlays = [
+
+              (final: prev: {
+                kotlin = prev.kotlin.overrideAttrs (oldAttrs: rec {
+                  version = "1.9.24";
+                  src = prev.fetchurl {
+                    url = "https://github.com/JetBrains/kotlin/releases/download/v${version}/kotlin-compiler-${version}.zip";
+                    hash = "sha256-63to4BAp+me8jQYO5UwSAY8sYN3EOM8h2xRRcimqaTs=";
+                  };
+                });
+              })
+
+            ];
           };
 
           treefmt.programs = {
@@ -54,7 +66,7 @@
               };
             };
             packages = with pkgs; [
-              kotlin
+              ktlint
               kotlin-language-server
             ];
             scripts = {
