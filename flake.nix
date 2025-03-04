@@ -23,7 +23,7 @@
       systems = import inputs.systems;
       perSystem =
         {
-          # config,
+          config,
           # self',
           # inputs',
           pkgs,
