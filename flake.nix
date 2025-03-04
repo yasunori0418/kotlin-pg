@@ -126,6 +126,18 @@
                 '';
                 description = "open test and javadoc report in browser by xdg-open.";
               };
+              sql = {
+                exec = ''
+                  ${pkgs.usql}/bin/usql postgresql://admin:admin@localhost:5432/app
+                '';
+                description = "connect local postgresql";
+              };
+              schema-dump = {
+                exec = ''
+                  atlas schema inspect -u "postgres://admin:admin@localhost:5432/app?sslmode=disable" > $REPO_ROOT/database/schema.hcl
+                '';
+                description = "do dump current local db schema";
+              };
             };
             enterShell = ''
               kls_classpath="kls-classpath"
