@@ -66,7 +66,7 @@
               };
             };
             packages = with pkgs; [
-              ktlint
+              atlas
               kotlin-language-server
             ];
             processes = {
