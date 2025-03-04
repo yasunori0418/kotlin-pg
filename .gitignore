@@ -40,3 +40,6 @@ out/
 .kotlin
 kls-classpath
 kls_database.db
+
+### database ###
+database/doc/
