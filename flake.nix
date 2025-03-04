@@ -98,47 +98,80 @@
                 };
               };
             };
-            scripts = {
-              gw = {
-                exec = ''
-                  $REPO_ROOT/gradlew $@
-                '';
-                description = "exeute gradlew of repository root";
+            scripts =
+              let
+                atlas-connect-db-url = "postgres://admin:admin@localhost:5432/app?sslmode=disable";
+              in
+              {
+                list =
+                  let
+                    inherit (pkgs) lib;
+                  in
+                  {
+                    exec = ''
+                      echo
+                      echo 🦾 Helper scripts you can run to make your development richer:
+                      echo 🦾
+                      ${pkgs.gnused}/bin/sed -e 's| |••|g' -e 's|=| |' <<EOF \
+                      | ${pkgs.util-linuxMinimal}/bin/column -t | ${pkgs.gnused}/bin/sed -e 's|^|🦾 |' -e 's|••| |g'
+                      ${lib.generators.toKeyValue { } (
+                        lib.mapAttrs (name: value: value.description) config.devenv.shells.default.scripts
+                      )}
+                      EOF
+                      echo
+                    '';
+                    description = "defined scripts in devenv shells";
+                  };
+                gw = {
+                  exec = ''
+                    $REPO_ROOT/gradlew $@
+                  '';
+                  description = "exeute gradlew of repository root";
+                };
+                kotest = {
+                  exec = ''
+                    $REPO_ROOT/gradlew test
+                  '';
+                  description = "exeute gradlew test";
+                };
+                doc = {
+                  exec = ''
+                    $REPO_ROOT/gradlew dokkaHtml
+                  '';
+                  description = "exeute gradlew dokkaHtml";
+                };
+                report = {
+                  exec = ''
+                    kotest
+                    doc
+                    # xdg-open build/dokka/html/index.html
+                    # xdg-open build/reports/tests/test/index.html
+                  '';
+                  description = "open test and javadoc report in browser by xdg-open.";
+                };
+                sql = {
+                  exec = ''
+                    ${pkgs.usql}/bin/usql postgresql://admin:admin@localhost:5432/app
+                  '';
+                  description = "connect local postgresql";
+                };
+                schema-dump = {
+                  exec = ''
+                    atlas schema inspect \
+                      -u ${atlas-connect-db-url} \
+                      > $REPO_ROOT/database/schema.hcl
+                  '';
+                  description = "do dump current local db schema";
+                };
+                schema-apply = {
+                  exec = ''
+                    atlas schema apply \
+                      -u ${atlas-connect-db-url} \
+                      --to file://$REPO_ROOT/database/schema.hcl
+                  '';
+                  description = "adapting change local db schema";
+                };
               };
-              kotest = {
-                exec = ''
-                  $REPO_ROOT/gradlew test
-                '';
-                description = "exeute `gradlew test`";
-              };
-              doc = {
-                exec = ''
-                  $REPO_ROOT/gradlew dokkaHtml
-                '';
-                description = "exeute `gradlew dokkaHtml`";
-              };
-              report = {
-                exec = ''
-                  kotest
-                  doc
-                  # xdg-open build/dokka/html/index.html
-                  # xdg-open build/reports/tests/test/index.html
-                '';
-                description = "open test and javadoc report in browser by xdg-open.";
-              };
-              sql = {
-                exec = ''
-                  ${pkgs.usql}/bin/usql postgresql://admin:admin@localhost:5432/app
-                '';
-                description = "connect local postgresql";
-              };
-              schema-dump = {
-                exec = ''
-                  atlas schema inspect -u "postgres://admin:admin@localhost:5432/app?sslmode=disable" > $REPO_ROOT/database/schema.hcl
-                '';
-                description = "do dump current local db schema";
-              };
-            };
             enterShell = ''
               kls_classpath="kls-classpath"
               cat <<EOF > $kls_classpath
