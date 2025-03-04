@@ -82,7 +82,7 @@ table "users" {
 }
 enum "task_status" {
   schema = schema.public
-  values = ["Not_started", "In_progress", "Done"]
+  values = ["Not_started", "In_progress", "Done", "Reviewing", "Wait_review"]
 }
 schema "public" {
   comment = "standard public schema"
