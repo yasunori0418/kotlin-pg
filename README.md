@@ -44,3 +44,20 @@ curl https://start.spring.io/starter.zip \
 ```
 
 <!-- textlint-enable -->
+
+## Building a develop environment
+
+```bash
+git clone https://github.com/yasunori0418/kotlin-pg.git
+cd kotlin-pg
+
+# Tool setup
+nix develop . --impure -c $SHELL
+
+# If you're using #nix-drienv
+cp {example,}.envrc
+direnv allow
+
+# Launching DB and SpringBoot
+devenv up
+```
