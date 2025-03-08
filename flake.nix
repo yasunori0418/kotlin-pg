@@ -128,6 +128,12 @@
                   '';
                   description = "exeute gradlew of repository root";
                 };
+                greet = {
+                  exec = ''
+                    ${pkgs.curl}/bin/curl -i http://localhost:8080/
+                  '';
+                  description = "call SpringBoot API!!";
+                };
                 kotest = {
                   exec = ''
                     $REPO_ROOT/gradlew test
