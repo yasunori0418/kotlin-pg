@@ -63,3 +63,10 @@ tasks.withType<Test> {
 tasks.test {
     outputs.dir(project.extra["snippetsDir"]!!)
 }
+
+develocity {
+    buildScan {
+        termsOfUseUrl.set("https://gradle.com/help/legal-terms-of-use")
+        termsOfUseAgree.set("no")
+    }
+}
