@@ -3,8 +3,6 @@ plugins {
     kotlin("plugin.spring") version "2.1.10"
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.graalvm.buildtools.native") version "0.10.5"
-    id("org.asciidoctor.jvm.convert") version "3.3.2"
 }
 
 group = "dev.yasunori0418"
@@ -64,9 +62,4 @@ tasks.withType<Test> {
 
 tasks.test {
     outputs.dir(project.extra["snippetsDir"]!!)
-}
-
-tasks.asciidoctor {
-    inputs.dir(project.extra["snippetsDir"]!!)
-    dependsOn(tasks.test)
 }
